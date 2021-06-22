@@ -35,20 +35,25 @@ public class Graph<V> {
     public static class Node<V> {
 
         private final V value;
-        private final Set<Node<V>> edges;
+//        private final Set<Node<V>> edges;
+        private final Map<Node<V>,Integer> edges;
 
         public Node(V value){
             this.value = value;
-            this.edges = new HashSet<>();
+            this.edges = new HashMap<>();
         }
 
         public Node(V value, Node<V>... edges){
             this(value);
-            this.edges.addAll(Arrays.asList(edges));
+            for(Node<V> edge : edges) this.edges.put(edge, 1);
+        }
+
+        public boolean addEdge(Node<V> edge, int weight) {
+            return null == this.edges.put(edge, weight);
         }
 
         public boolean addEdge(Node<V> edge) {
-            return this.edges.add(edge);
+            return this.addEdge(edge, 1);
         }
 
         public V getValue() {
@@ -56,7 +61,7 @@ public class Graph<V> {
         }
 
         public Set<Node<V>> getEdges() {
-            return edges;
+            return edges.keySet();
         }
     }
 }
